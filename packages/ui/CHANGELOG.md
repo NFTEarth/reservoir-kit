@@ -1,4 +1,16 @@
 
+* + Refactor [e3d6754](https://github.com/reservoirprotocol/reservoir-kit/commit/e3d67544a4ec3a5633b212fc80645f1c8538da58)
+* + Fix [51f1285](https://github.com/reservoirprotocol/reservoir-kit/commit/51f1285ff539101c931c7f5461bfda04081ae5d5)
+* + Add nftearth exchange [82fc383](https://github.com/reservoirprotocol/reservoir-kit/commit/82fc38331f40ac801d40ac132ed8a091ed63a22a)
+## [0.8.8](https://github.com/reservoirprotocol/reservoir-kit/commit/7c02a38d9a93b8eeffc06c041bf9ec77c7a8bd0b) (2023-01-23)
+
+* Merge pull request #140 from reservoirprotocol/pedro/grwth-1914-not-getting-updated-balance-for-custom [1667272](https://github.com/reservoirprotocol/reservoir-kit/commit/166727269aa05ca3af18b9057e8b009598270a9a)
+* Merge pull request #139 from reservoirprotocol/pedro/grwth-1849-upgrade-swr-to-v2 [a38820d](https://github.com/reservoirprotocol/reservoir-kit/commit/a38820d32025c0c1f17af3c6ae792b5251d42794)
+* Remove chain_id configuration from useBalance check [3818d73](https://github.com/reservoirprotocol/reservoir-kit/commit/3818d7337febcedd476af09be1b76d23c74cd4c7)
+* Fix hasNextPage when using an offset [7358721](https://github.com/reservoirprotocol/reservoir-kit/commit/73587210b0872c043dbdad8c7590c5db931b6959)
+* fix swr migration issue when passing string vs array to fetcher [14fc230](https://github.com/reservoirprotocol/reservoir-kit/commit/14fc2302e204fc8058a31924c700a983445e142b)
+* Fix useCollections hook not passing api key or version [1829507](https://github.com/reservoirprotocol/reservoir-kit/commit/18295079e3d5c12001f4b284db8d5fc3d7795c94)
+* Normalize hook responses and add resetCache function to hook response [d4a99ea](https://github.com/reservoirprotocol/reservoir-kit/commit/d4a99eac8c7149f079e30cc8eaa6177ababbc187)
 ## [0.8.7](https://github.com/reservoirprotocol/reservoir-kit/commit/6daa7a0babde75c34f53b26c9f52988194a118ea) (2023-01-20)
 
 * Merge pull request #132 from reservoirprotocol/pedro/grwth-1668-improvement-for-listing-1155-in-quantity [e3c135d](https://github.com/reservoirprotocol/reservoir-kit/commit/e3c135d6cd15f69e346435d5ceb591a115276c7e)

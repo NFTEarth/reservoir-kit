@@ -1,4 +1,7 @@
 
+* + Refactor [e3d6754](https://github.com/reservoirprotocol/reservoir-kit/commit/e3d67544a4ec3a5633b212fc80645f1c8538da58)
+* + Fix [51f1285](https://github.com/reservoirprotocol/reservoir-kit/commit/51f1285ff539101c931c7f5461bfda04081ae5d5)
+* + Add nftearth exchange [82fc383](https://github.com/reservoirprotocol/reservoir-kit/commit/82fc38331f40ac801d40ac132ed8a091ed63a22a)
 * 🎉 Release client package v0.3.4 [a1aa27c](https://github.com/reservoirprotocol/reservoir-kit/commit/a1aa27c0ffbd2b950028e46e383b14d2fe0791c5)
 * Merge pull request #136 from reservoirprotocol/pedro/grwth-1678-acceptbid-modal-price-change-update [0c71239](https://github.com/reservoirprotocol/reservoir-kit/commit/0c712394a59bd2e4113bd1143eae41ef9210b11b)
 * update price mismatch copy [84a04e9](https://github.com/reservoirprotocol/reservoir-kit/commit/84a04e94abcc84a527b39dba9932e96d2b76048e)
