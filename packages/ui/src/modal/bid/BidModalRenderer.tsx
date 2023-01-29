@@ -270,8 +270,8 @@ export const BidModalRenderer: FC<Props> = ({
 
     const bid: BidData = {
       weiPrice: parseEther(`${bidAmount}`).toString(),
-      orderbook: 'reservoir',
-      orderKind: 'seaport',
+      orderbook: 'nftearth',
+      orderKind: 'nftearth',
       attributeKey: trait?.key,
       attributeValue: trait?.value,
     }

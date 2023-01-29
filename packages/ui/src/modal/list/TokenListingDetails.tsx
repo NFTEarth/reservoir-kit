@@ -8,7 +8,7 @@ import { ListingData } from './ListModalRenderer'
 import { Currency } from '../../types/Currency'
 
 type Props = {
-  token?: NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>['0']
+  token?: NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>[0]
   collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
   listingData: ListingData[]
   currency: Currency

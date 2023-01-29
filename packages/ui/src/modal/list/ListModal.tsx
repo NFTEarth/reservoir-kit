@@ -143,7 +143,7 @@ export function ListModal({
         useEffect(() => {
           if (stepData) {
             const isNativeOrder =
-              stepData.listingData.marketplace.orderbook === 'reservoir'
+              stepData.listingData.marketplace.orderbook === 'nftearth'
             const isSeaportOrder =
               stepData.listingData.marketplace.orderKind === 'seaport'
             const marketplaceName =
@@ -218,7 +218,7 @@ export function ListModal({
         }, [transactionError])
 
         const availableMarketplaces = marketplaces.filter((market) => {
-          const isNative = market.orderbook === 'reservoir'
+          const isNative = market.orderbook === 'nftearth'
           return nativeOnly
             ? market.listingEnabled && isNative
             : market.listingEnabled
@@ -229,7 +229,7 @@ export function ListModal({
         )
         const quantitySelectionAvailable = selectedMarketplaces.every(
           (marketplace) =>
-            marketplace.orderbook === 'reservoir' ||
+            marketplace.orderbook === 'nftearth' ||
             marketplace.orderbook === 'opensea'
         )
 
@@ -341,13 +341,13 @@ export function ListModal({
                         <Text style="body3">{localMarketplace?.name}</Text>
                         <Flex css={{ alignItems: 'center', gap: 8 }}>
                           <Text style="body3" color="subtle" as="div">
-                            on Reservoir
+                            on NFTEarth
                           </Text>
                           <InfoTooltip
                             side="bottom"
                             width={200}
                             content={
-                              'Listings made on this marketplace will be distributed across the reservoir ecosystem'
+                              'Listings made on this marketplace will be distributed across the nftearth ecosystem'
                             }
                           />
                         </Flex>
@@ -369,7 +369,7 @@ export function ListModal({
                     )}
                     {availableMarketplaces
                       .filter(
-                        (marketplace) => marketplace.orderbook !== 'reservoir'
+                        (marketplace) => marketplace.orderbook !== 'nftearth'
                       )
                       .map((marketplace) => (
                         <Box key={marketplace.name} css={{ mb: '$3' }}>
@@ -693,7 +693,7 @@ export function ListModal({
                     <Flex css={{ gap: '$3' }}>
                       {listingData.map((data) => {
                         const source =
-                          data.listing.orderbook === 'reservoir' &&
+                          data.listing.orderbook === 'nftearth' &&
                           client?.source
                             ? client?.source
                             : data.marketplace.name

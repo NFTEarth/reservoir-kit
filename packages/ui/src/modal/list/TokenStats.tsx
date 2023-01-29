@@ -6,7 +6,7 @@ import { useTokens, useCollections } from '../../hooks'
 import InfoTooltip from '../InfoTooltip'
 
 type Props = {
-  token?: NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>['0']
+  token?: NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>[0]
   collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
 }
 

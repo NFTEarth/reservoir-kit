@@ -3318,6 +3318,7 @@ export interface definitions {
   Model286: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "zeroex-v4"
@@ -3337,7 +3338,7 @@ export interface definitions {
      * @default reservoir
      * @enum {string}
      */
-    orderbook?: "reservoir" | "opensea" | "looks-rare";
+    orderbook?: "nftearth" | "reservoir" | "opensea" | "looks-rare";
     orderbookApiKey?: string;
     /** @description The name of the source */
     source?: string;
@@ -3349,6 +3350,7 @@ export interface definitions {
   Model288: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "zeroex-v4"
@@ -3367,6 +3369,7 @@ export interface definitions {
      * @enum {string}
      */
     orderbook?:
+      | "nftearth"
       | "reservoir"
       | "opensea"
       | "looks-rare"
@@ -3385,6 +3388,7 @@ export interface definitions {
   Model290: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "looks-rare"
       | "zeroex-v4"
       | "x2y2"
@@ -3451,13 +3455,13 @@ export interface definitions {
      * @default seaport
      * @enum {string}
      */
-    orderKind?: "zeroex-v4" | "seaport" | "looks-rare" | "x2y2";
+    orderKind?: "nftearth" | "zeroex-v4" | "seaport" | "looks-rare" | "x2y2";
     /**
      * @description Orderbook where order is placed. Example: `Reservoir`
      * @default reservoir
      * @enum {string}
      */
-    orderbook?: "reservoir" | "opensea" | "looks-rare" | "x2y2";
+    orderbook?: "nftearth" | "reservoir" | "opensea" | "looks-rare" | "x2y2";
     /**
      * @description If true, royalties will be automatically included.
      * @default true
@@ -3523,6 +3527,7 @@ export interface definitions {
      * @enum {string}
      */
     orderKind?:
+      | "nftearth"
       | "zeroex-v4"
       | "seaport"
       | "looks-rare"
@@ -3536,6 +3541,7 @@ export interface definitions {
      * @enum {string}
      */
     orderbook?:
+      | "nftearth"
       | "reservoir"
       | "opensea"
       | "looks-rare"
@@ -3591,6 +3597,7 @@ export interface definitions {
   Model306: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "zeroex-v4"
@@ -3702,6 +3709,7 @@ export interface definitions {
   Model311: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "zeroex-v4"
@@ -3800,13 +3808,13 @@ export interface definitions {
      * @default seaport
      * @enum {string}
      */
-    orderKind?: "looks-rare" | "zeroex-v4" | "seaport" | "x2y2";
+    orderKind?: "nftearth" | "looks-rare" | "zeroex-v4" | "seaport" | "x2y2";
     /**
      * @description Orderbook where order is placed. Example: `Reservoir`
      * @default reservoir
      * @enum {string}
      */
-    orderbook?: "opensea" | "looks-rare" | "reservoir" | "x2y2";
+    orderbook?: "nftearth"| "opensea" | "looks-rare" | "reservoir" | "x2y2";
     /**
      * @description If true, royalties will be automatically included.
      * @default true
@@ -3849,6 +3857,7 @@ export interface definitions {
      * @enum {string}
      */
     orderKind?:
+      | "nftearth"
       | "looks-rare"
       | "zeroex-v4"
       | "seaport"
@@ -3862,6 +3871,7 @@ export interface definitions {
      * @enum {string}
      */
     orderbook?:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "reservoir"
@@ -3945,6 +3955,7 @@ export interface definitions {
   rawOrder: {
     /** @enum {string} */
     kind:
+      | "nftearth"
       | "opensea"
       | "looks-rare"
       | "zeroex-v4"
@@ -5083,9 +5094,9 @@ export interface operations {
         /** Amount bidder is willing to offer in wei. Example: `1000000000000000000` */
         weiPrice: string;
         /** Exchange protocol used to create order. Example: `seaport` */
-        orderKind?: "looks-rare" | "zeroex-v4" | "seaport";
+        orderKind?: "nftearth" | "looks-rare" | "zeroex-v4" | "seaport";
         /** Orderbook where order is placed. Example: `Reservoir` */
-        orderbook?: "reservoir" | "opensea" | "looks-rare";
+        orderbook?: "nftearth"| "reservoir" | "opensea" | "looks-rare";
         /** Name of the platform that created the order. Example: `Chimpers Market` */
         source?: string;
         /** If true, royalties will be automatically included. */
@@ -5272,9 +5283,9 @@ export interface operations {
         /** Amount seller is willing to sell for in wei. Example: `1000000000000000000` */
         weiPrice: string;
         /** Exchange protocol used to create order. Example: `seaport` */
-        orderKind?: "looks-rare" | "zeroex-v4" | "seaport" | "x2y2";
+        orderKind?: "nftearth"| "looks-rare" | "zeroex-v4" | "seaport" | "x2y2";
         /** Orderbook where order is placed. Example: `Reservoir` */
-        orderbook?: "opensea" | "looks-rare" | "reservoir" | "x2y2";
+        orderbook?: "nftearth" | "opensea" | "looks-rare" | "reservoir" | "x2y2";
         /** Name of the platform that created the order. Example: `Chimpers Market` */
         source?: string;
         /** If true, royalties will be automatically included. */
