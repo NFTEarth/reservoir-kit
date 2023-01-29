@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "reservoir-kit",
+  "name": "@nftearth/reservoir-kit",
   "version": "0.0.0",
   "description": "ReservoirKit is the official frontend kit to get you started building dApps with the ReservoirProtocol.",
   "author": "Reservoir Protocol",
@@ -55,5 +55,14 @@
   "dependencies": {
     "@types/react-flatpickr": "^3.8.7",
     "next-remote-watch": "^1.0.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NFTEarth/reservoir-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NFTEarth/reservoir-kit/issues"
+  },
+  "homepage": "https://github.com/NFTEarth/reservoir-kit#readme"
 }

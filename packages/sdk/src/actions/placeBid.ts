@@ -46,7 +46,7 @@ export async function placeBid({ bids, signer, onProgress }: Data) {
         }
       }
       if (
-        (!bid.orderbook || bid.orderbook === 'reservoir') &&
+        (!bid.orderbook || bid.orderbook === 'nftearth') &&
         client.marketplaceFee &&
         client.marketplaceFeeRecipient &&
         !('fees' in bid)

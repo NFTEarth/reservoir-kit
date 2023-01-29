@@ -12,7 +12,7 @@ import {
 } from '../../hooks'
 import { useAccount, useSigner } from 'wagmi'
 
-import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
+import { Execute, ReservoirClientActions } from '@nftearth/reservoir-sdk'
 import { parseUnits } from 'ethers/lib/utils.js'
 import dayjs from 'dayjs'
 import { Marketplace } from '../../hooks/useMarketplaces'
@@ -280,7 +280,7 @@ export const ListModalRenderer: FC<Props> = ({
     if (marketplaces) {
       setLocalMarketplace(
         marketplaces.find(
-          (marketplace) => marketplace.orderbook === 'reservoir'
+          (marketplace) => marketplace.orderbook === 'nftearth'
         ) || null
       )
     } else {

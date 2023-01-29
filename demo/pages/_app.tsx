@@ -20,7 +20,7 @@ import {
   ReservoirKitProvider,
   darkTheme as defaultTheme,
   ReservoirKitTheme,
-} from '@reservoir0x/reservoir-kit-ui'
+} from '@nftearth/reservoir-kit-ui'
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE || 'https://api.reservoir.tools'

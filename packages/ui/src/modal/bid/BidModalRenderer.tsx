@@ -13,7 +13,7 @@ import { useAccount, useBalance, useNetwork, useSigner } from 'wagmi'
 import { mainnet, goerli } from 'wagmi/chains'
 
 import { constants } from 'ethers'
-import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
+import { Execute, ReservoirClientActions } from '@nftearth/reservoir-sdk'
 import { ExpirationOption } from '../../types/ExpirationOption'
 import defaultExpirationOptions from '../../lib/defaultExpirationOptions'
 import { formatBN } from '../../lib/numbers'
@@ -335,6 +335,7 @@ export const BidModalRenderer: FC<Props> = ({
         },
       })
       .catch((e: any) => {
+        // @ts-ignore
         const transactionError = new Error(e?.message || '', {
           cause: e,
         })
