@@ -119,6 +119,8 @@ export function BuyModal({
       }) => {
         const title = titleForStep(buyStep)
 
+        console.log(transactionError);
+
         useEffect(() => {
           if (buyStep === BuyStep.Complete && onPurchaseComplete) {
             const data: PurchaseData = {

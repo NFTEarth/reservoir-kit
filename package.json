@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@nftearth/reservoir-kit",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "ReservoirKit is the official frontend kit to get you started building dApps with the ReservoirProtocol.",
   "author": "Reservoir Protocol",
   "license": "MIT",

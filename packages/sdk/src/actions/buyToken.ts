@@ -2,7 +2,6 @@ import { Execute, paths } from '../types'
 import { Signer } from 'ethers'
 import { getClient } from '.'
 import { executeSteps, request } from '../utils'
-import { defaultHeaders } from '../../../ui/src/lib/swr'
 
 export type Token = Pick<
   NonNullable<
@@ -115,10 +114,6 @@ export async function buyToken(data: Data) {
     return true
   } catch (err: any) {
     if (tokens) {
-      const headers = {
-        ...defaultHeaders(client?.apiKey, client?.version),
-        'Content-Type': 'application/json',
-      }
 
       tokens.forEach((token) => {
         const data: paths['/tokens/refresh/v1']['post']['parameters']['body']['body'] =
@@ -130,7 +125,6 @@ export async function buyToken(data: Data) {
           method: 'POST',
           url: `${client.apiBase}/tokens/refresh/v1`,
           data: JSON.stringify(data),
-          headers
         })
       })
     }
