@@ -205,7 +205,7 @@ export const ListModalRenderer: FC<Props> = ({
     })
     const hasNonNativeMarketplace = updatedMarketplaces.find(
       (marketplace) =>
-        marketplace.isSelected && marketplace.orderbook !== 'reservoir'
+        marketplace.isSelected && marketplace.orderbook !== 'nftearth'
     )
     if (hasNonNativeMarketplace) {
       setQuantity(1)
@@ -297,7 +297,7 @@ export const ListModalRenderer: FC<Props> = ({
           marketplaces.map((marketplace) => {
             return {
               ...marketplace,
-              isSelected: marketplace.orderbook === 'reservoir',
+              isSelected: marketplace.orderbook === 'nftearth',
             }
           })
         )

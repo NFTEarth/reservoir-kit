@@ -1,4 +1,3 @@
-import { isOpenSeaBanned } from '@nftearth/reservoir-sdk'
 import { useEffect, useState } from 'react'
 
 export default function (contract?: string, token?: number | string) {
@@ -6,14 +5,7 @@ export default function (contract?: string, token?: number | string) {
 
   useEffect(() => {
     if (contract && token) {
-      isOpenSeaBanned(contract, token)
-        .then((isBanned) => {
-          setIsBanned(isBanned)
-        })
-        .catch((e) => {
-          console.error(e)
-          setIsBanned(false)
-        })
+
     } else {
       setIsBanned(false)
     }

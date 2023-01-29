@@ -16,7 +16,7 @@ export const ReservoirClientContext = createContext<ReservoirClient | null>(
 
 export const ReservoirClientProvider: FC<ReservoirClientProviderProps> =
   function ({ children, options }: ReservoirClientProviderProps) {
-    const [clientContext, _] = useState<ReservoirClient | null>(
+    const [clientContext] = useState<ReservoirClient | null>(
       createClient({ ...options, uiVersion: version })
     )
 

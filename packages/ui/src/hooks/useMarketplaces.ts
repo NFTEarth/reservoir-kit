@@ -34,7 +34,7 @@ export default function (
         )
       }
       updatedMarketplaces.forEach((marketplace) => {
-        if (marketplace.orderbook === 'reservoir') {
+        if (marketplace.orderbook === 'nftearth') {
           const data = getLocalMarketplaceData()
           marketplace.name = data.title
           marketplace.feeBps = client?.marketplaceFee
@@ -51,7 +51,7 @@ export default function (
         marketplace.price = 0
         marketplace.truePrice = 0
         marketplace.isSelected =
-          marketplace.orderbook === 'reservoir' ? true : false
+          marketplace.orderbook === 'nftearth' ? true : false
       })
       setMarketplaces(updatedMarketplaces)
     }
