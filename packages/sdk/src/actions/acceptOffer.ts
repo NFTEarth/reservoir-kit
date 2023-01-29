@@ -2,6 +2,7 @@ import { Signer } from 'ethers'
 import { getClient } from '.'
 import { Execute, paths } from '../types'
 import { executeSteps, request } from '../utils'
+import { defaultHeaders } from '../../../ui/src/lib/swr'
 
 export type Token = Pick<
   NonNullable<
@@ -74,14 +75,21 @@ export async function acceptOffer(data: Data) {
     )
     return true
   } catch (err: any) {
+    const headers = {
+      ...defaultHeaders(client?.apiKey, client?.version),
+      'Content-Type': 'application/json',
+    }
+
     const data: paths['/tokens/refresh/v1']['post']['parameters']['body']['body'] =
       {
         token: `${token.contract}:${token.tokenId}`,
+        overrideCoolDown: true
       }
     request({
       method: 'POST',
       url: `${client.apiBase}/tokens/refresh/v1`,
       data: JSON.stringify(data),
+      headers
     })
     throw err
   }
