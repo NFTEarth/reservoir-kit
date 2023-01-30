@@ -26,7 +26,7 @@ const generateTypes = async () => {
     },
   }
   const output = await openapiTS(
-    'https://api.reservoir.tools/swagger.json',
+    'https://indexer.nftearth.exchange/swagger.json',
     options
   )
 

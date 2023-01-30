@@ -267,13 +267,12 @@ export const BuyModalRenderer: FC<Props> = ({
         },
         options,
       })
-      .catch((e: any) => {
-        const error = e as Error
+      .catch((error: any) => {
         if (error && error?.message && error?.message.includes('ETH balance')) {
           setHasEnoughCurrency(false)
         } else {
           const errorType = (error as any)?.type
-          let message = 'Oops, something went wrong. Please try again.'
+          let message = error.data?.message || 'Oops, something went wrong. Please try again.'
           if (errorType && errorType === 'price mismatch') {
             message = error.message
           }

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default () => (
   <svg
-    width="auto"
+    width="100%"
     height="100%"
     viewBox="5 0 15 24"
     fill="none"

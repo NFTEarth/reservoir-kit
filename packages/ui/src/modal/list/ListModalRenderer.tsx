@@ -94,7 +94,7 @@ const isCurrencyAllowed = (
       return true
     }
     switch (marketplace.orderbook) {
-      case 'reservoir':
+      case 'nftearth':
         return true
       case 'opensea':
         return openseaPaymentTokens.some(

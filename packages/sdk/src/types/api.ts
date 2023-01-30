@@ -1201,6 +1201,7 @@ export interface definitions {
     /** @description Open Sea slug */
     slug?: string;
     createdAt?: string;
+    verified: boolean;
     name?: string;
     image?: string;
     banner?: string;
@@ -5096,7 +5097,7 @@ export interface operations {
         /** Exchange protocol used to create order. Example: `seaport` */
         orderKind?: "nftearth" | "looks-rare" | "zeroex-v4" | "seaport";
         /** Orderbook where order is placed. Example: `Reservoir` */
-        orderbook?: "nftearth"| "reservoir" | "opensea" | "looks-rare";
+        orderbook?: "nftearth" | "reservoir" | "opensea" | "looks-rare";
         /** Name of the platform that created the order. Example: `Chimpers Market` */
         source?: string;
         /** If true, royalties will be automatically included. */
