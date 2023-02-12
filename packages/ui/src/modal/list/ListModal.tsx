@@ -473,8 +473,8 @@ export function ListModal({
                       <Flex css={{ alignItems: 'center', gap: 8 }}>
                         <Text style="subtitle2" color="subtle" as="p">
                           {quantityAvailable > 1 && quantitySelectionAvailable
-                            ? 'Total Profit'
-                            : 'Profit'}
+                            ? 'Total Proceeds'
+                            : 'Proceeds'}
                         </Text>
                         <InfoTooltip
                           side="left"
