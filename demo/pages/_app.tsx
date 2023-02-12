@@ -12,7 +12,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { ThemeProvider } from 'next-themes'
 import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit'
 import { WagmiConfig, createClient, configureChains } from 'wagmi'
-import * as allChains from 'wagmi/chains'
+import * as allChains from '@wagmi/core/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import '../fonts.css'
@@ -20,6 +20,7 @@ import {
   ReservoirKitProvider,
   darkTheme as defaultTheme,
   ReservoirKitTheme,
+  CartProvider,
 } from '@nftearth/reservoir-kit-ui'
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY
 const API_BASE =
@@ -82,32 +83,34 @@ const AppWrapper: FC<any> = ({ children }) => {
   const { theme } = useContext(ThemeSwitcherContext)
 
   return (
-    <ReservoirKitProvider
-      options={{
-        apiBase: API_BASE,
-        apiKey: API_KEY,
-        marketplaceFee: FEE,
-        marketplaceFeeRecipient: FEE_RECIPIENT,
-        source: SOURCE,
-        normalizeRoyalties: NORMALIZE_ROYALTIES,
-      }}
-      theme={theme}
-    >
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        value={{
-          dark: darkTheme.className,
-          light: 'light',
+    <WagmiConfig client={wagmiClient}>
+      <ReservoirKitProvider
+        options={{
+          apiBase: API_BASE,
+          apiKey: API_KEY,
+          marketplaceFee: FEE,
+          marketplaceFeeRecipient: FEE_RECIPIENT,
+          source: SOURCE,
+          normalizeRoyalties: NORMALIZE_ROYALTIES,
         }}
-        enableSystem={false}
-        storageKey={'demo-theme'}
+        theme={theme}
       >
-        <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
-        </WagmiConfig>
-      </ThemeProvider>
-    </ReservoirKitProvider>
+        <CartProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            value={{
+              dark: darkTheme.className,
+              light: 'light',
+            }}
+            enableSystem={false}
+            storageKey={'demo-theme'}
+          >
+            <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+          </ThemeProvider>
+        </CartProvider>
+      </ReservoirKitProvider>
+    </WagmiConfig>
   )
 }
 

@@ -1,4 +1,6 @@
 
+* 🎉 Release client package v0.3.5 [9621708](https://github.com/reservoirprotocol/reservoir-kit/commit/9621708517e0b2043515510137f2584931eada51)
+* Sync api [6863447](https://github.com/reservoirprotocol/reservoir-kit/commit/6863447142a5f24a046d93432e0c1b4de7d1f138)
 * + Refactor [e3d6754](https://github.com/reservoirprotocol/reservoir-kit/commit/e3d67544a4ec3a5633b212fc80645f1c8538da58)
 * + Fix [51f1285](https://github.com/reservoirprotocol/reservoir-kit/commit/51f1285ff539101c931c7f5461bfda04081ae5d5)
 * + Add nftearth exchange [82fc383](https://github.com/reservoirprotocol/reservoir-kit/commit/82fc38331f40ac801d40ac132ed8a091ed63a22a)

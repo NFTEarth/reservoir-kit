@@ -42,6 +42,7 @@
     "@radix-ui/react-toggle-group": "^1.0.0",
     "@react-hookz/web": "^19.2.0",
     "@stitches/react": "^1.2.8",
+    "@wagmi/core": "^0.9.5",
     "dayjs": "^1.11.4",
     "flatpickr": "^4.6.13",
     "framer-motion": "^6.4.2",

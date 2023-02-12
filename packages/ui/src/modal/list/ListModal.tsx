@@ -20,7 +20,12 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Modal } from '../Modal'
-import { ListingData, ListModalRenderer, ListStep } from './ListModalRenderer'
+import {
+  ListingData,
+  ListModalRenderer,
+  ListStep,
+  StepData,
+} from './ListModalRenderer'
 import { ModalSize } from '../Modal'
 import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import TokenStats from './TokenStats'
@@ -30,7 +35,7 @@ import TokenListingDetails from './TokenListingDetails'
 import { useFallbackState, useReservoirClient } from '../../hooks'
 import TransactionProgress from '../../modal/TransactionProgress'
 import ProgressBar from '../../modal/ProgressBar'
-import InfoTooltip from '../InfoTooltip'
+import InfoTooltip from '../../primitives/InfoTooltip'
 import { Marketplace } from '../../hooks/useMarketplaces'
 import { Currency } from '../../types/Currency'
 import { constants } from 'ethers'
@@ -51,7 +56,11 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   onGoToToken?: () => any
   onListingComplete?: (data: ListingCallbackData) => void
   onListingError?: (error: Error, data: ListingCallbackData) => void
-  onClose?: () => void
+  onClose?: (
+    data: ListingCallbackData,
+    stepData: StepData | null,
+    currentStep: ListStep
+  ) => void
 }
 
 const Image = styled('img', {})
@@ -240,6 +249,15 @@ export function ListModal({
             title="List Item for sale"
             open={open}
             onOpenChange={(open) => {
+              if (!open && onClose) {
+                const data: ListingCallbackData = {
+                  tokenId: tokenId,
+                  collectionId: collectionId,
+                  listings: listingData,
+                }
+                onClose(data, stepData, listStep)
+              }
+
               setOpen(open)
             }}
             loading={!token}
@@ -403,7 +421,7 @@ export function ListModal({
                       onClick={() => setListStep(ListStep.SetPrice)}
                       css={{ width: '100%' }}
                     >
-                      Next
+                      Set your price
                     </Button>
                   </Box>
                 </MainContainer>
@@ -488,6 +506,7 @@ export function ListModal({
                       <Box key={marketplace.name} css={{ mb: '$3' }}>
                         <MarketplacePriceInput
                           marketplace={marketplace}
+                          collection={collection}
                           currency={currency}
                           usdPrice={usdPrice}
                           quantity={quantity}
@@ -555,18 +574,16 @@ export function ListModal({
                     </Box>
                   </Box>
                   <Box css={{ p: '$4', width: '100%' }}>
-                    {selectedMarketplaces.some(
-                      (marketplace) =>
-                        marketplace.price === '' || marketplace.price == 0
-                    ) ? (
-                      <Button disabled={true} css={{ width: '100%' }}>
-                        Set your price
-                      </Button>
-                    ) : (
-                      <Button onClick={listToken} css={{ width: '100%' }}>
-                        Next
-                      </Button>
-                    )}
+                    <Button
+                      disabled={selectedMarketplaces.some(
+                        (marketplace) =>
+                          marketplace.price === '' || marketplace.price == 0
+                      )}
+                      onClick={listToken}
+                      css={{ width: '100%' }}
+                    >
+                      List for sale
+                    </Button>
                   </Box>
                 </MainContainer>
               </ContentContainer>
@@ -727,9 +744,6 @@ export function ListModal({
                         <Button
                           onClick={() => {
                             setOpen(false)
-                            if (onClose) {
-                              onClose()
-                            }
                           }}
                           css={{ flex: 1 }}
                           color="secondary"
@@ -741,9 +755,6 @@ export function ListModal({
                           color="primary"
                           onClick={() => {
                             onGoToToken()
-                            if (onClose) {
-                              onClose()
-                            }
                           }}
                         >
                           Go to Token
@@ -753,9 +764,6 @@ export function ListModal({
                       <Button
                         onClick={() => {
                           setOpen(false)
-                          if (onClose) {
-                            onClose()
-                          }
                         }}
                         style={{ flex: 1 }}
                         color="primary"
