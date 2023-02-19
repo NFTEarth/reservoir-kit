@@ -3,5 +3,6 @@ const wrappedContractNames: Record<number, string> = {
   5: 'WETH',
   10: 'WETH',
   137: 'WMATIC',
+  42161: 'WETH',
 }
 export default wrappedContractNames

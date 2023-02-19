@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useCart, useTokens } from './'
 import { SWRInfiniteConfiguration } from 'swr/infinite'
-import { Cart } from './../context/CartProvider'
+import { Cart } from '../context/CartProvider'
 
 export default function (
   options: Parameters<typeof useTokens>['0'] = {},
