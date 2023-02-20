@@ -17,6 +17,7 @@ export {
   useAttributes,
   useBids,
   useUserTokens,
+  useTokenActivity,
   useUserTopBids,
   useUserCollections,
   useCart,

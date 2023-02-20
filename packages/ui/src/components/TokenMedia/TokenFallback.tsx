@@ -39,7 +39,8 @@ const TokenFallback: FC<TokenFallbackProps> = ({
       </Text>
       <Button
         color="secondary"
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           onRefreshClicked()
           const url = `${client?.apiBase}/tokens/refresh/v1`
           const body: paths['/tokens/refresh/v1']['post']['parameters']['body']['body'] =

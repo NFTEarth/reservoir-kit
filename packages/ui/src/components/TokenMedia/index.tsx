@@ -104,9 +104,7 @@ const TokenMedia: FC<Props> = ({
   }
 
   useModelViewer(
-    !preview && mediaType && (mediaType === 'gltf' || mediaType === 'glb')
-      ? true
-      : false
+    !!(!preview && mediaType && (mediaType === 'gltf' || mediaType === 'glb'))
   )
 
   const [measurements, containerRef] = useMeasure<HTMLDivElement>()
@@ -223,18 +221,18 @@ const TokenMedia: FC<Props> = ({
     return (
       <model-viewer
         src={media}
-        ar
+        ar=""
         ar-modes="webxr scene-viewer quick-look"
         poster={tokenPreview}
-        seamless-poster
+        seamless-poster=""
         shadow-intensity="1"
-        camera-controls
-        enable-pan
+        camera-controls=""
+        enable-pan=""
         {...modelViewerOptions}
         style={computedStyle}
         className={className}
         onError={onErrorCb}
-      ></model-viewer>
+      />
     )
   }
 
@@ -275,7 +273,7 @@ const TokenMedia: FC<Props> = ({
         sandbox="allow-scripts"
         frameBorder="0"
         {...iframeOptions}
-      ></iframe>
+      />
     )
   }
 
