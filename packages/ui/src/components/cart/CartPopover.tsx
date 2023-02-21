@@ -38,6 +38,7 @@ import {
   CheckoutStatus,
   CheckoutTransactionError,
 } from '../../context/CartProvider'
+import { useAccount } from 'wagmi'
 
 const scaleUp = keyframes({
   '0%': { opacity: 0, transform: 'scale(0.9) translateY(-10px)' },
@@ -60,6 +61,7 @@ type Props = {
   side?: ComponentPropsWithRef<typeof Popover>['side']
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
   tokenUrl?: string
+  onConnectWallet: () => void
 }
 
 const CONTENT_OFFSET = 8
@@ -69,6 +71,7 @@ export function CartPopover({
   side,
   openState,
   tokenUrl,
+  onConnectWallet,
 }: Props): ReactElement {
   const [popoverTrigger, setPopoverTrigger] =
     useState<HTMLButtonElement | null>(null)
@@ -80,6 +83,7 @@ export function CartPopover({
   const [displayPendingTransaction, setDisplayPendingTransaction] =
     useState(false)
   const [purchaseComplete, setPurchaseComplete] = useState(false)
+  const { isConnected } = useAccount()
 
   useEffect(() => {
     if (!open) {
@@ -110,8 +114,10 @@ export function CartPopover({
         hasEnoughCurrency,
         balance,
         currency,
+        cartCurrencyConverted,
         transaction,
         blockExplorerBaseUrl,
+        cartChain,
         remove,
         clear,
         checkout,
@@ -219,6 +225,12 @@ export function CartPopover({
                   <FontAwesomeIcon icon={faClose} width="16" height="16" />
                 </Button>
               </Flex>
+              {cartCurrencyConverted && (
+                <CartToast
+                  kind="warning"
+                  message={`Mixed currency items are only available to be checked out with ${currency?.symbol}`}
+                />
+              )}
               {flaggedItems.length > 0 && (
                 <CartToast
                   kind="warning"
@@ -318,8 +330,13 @@ export function CartPopover({
                     justify="center"
                     css={{ color: '$neutralBorderHover', flex: 1, gap: '$5' }}
                   >
-                    <FontAwesomeIcon icon={faShoppingCart} width="27" />
-                    <Text style="body2" color="subtle">
+                    <FontAwesomeIcon
+                      icon={faShoppingCart}
+                      width="30"
+                      height="30"
+                      style={{ height: 30 }}
+                    />
+                    <Text style="body3" color="subtle">
                       No items in your cart
                     </Text>
                   </Flex>
@@ -360,6 +377,7 @@ export function CartPopover({
                         address={currency?.contract}
                         decimals={currency?.decimals}
                         logoWidth={12}
+                        chainId={cartChain?.id}
                       />
                       {usdPrice && (
                         <FormatCurrency
@@ -386,6 +404,7 @@ export function CartPopover({
                         address={currency?.contract}
                         decimals={currency?.decimals}
                         logoWidth={18}
+                        chainId={cartChain?.id}
                       />
                       {usdPrice && (
                         <FormatCurrency
@@ -409,7 +428,7 @@ export function CartPopover({
                       Please confirm purchase in your wallet{' '}
                     </Text>
                   )}
-                {!hasEnoughCurrency && (
+                {!hasEnoughCurrency && isConnected && (
                   <Flex
                     align="center"
                     justify="center"
@@ -435,13 +454,25 @@ export function CartPopover({
                   (transaction?.status === CheckoutStatus.Idle ||
                     !displayPendingTransaction) && (
                     <Button
-                      disabled={!hasEnoughCurrency}
-                      onClick={() => {
-                        checkout()
-                        setDisplayPendingTransaction(true)
+                      disabled={!hasEnoughCurrency && isConnected}
+                      onClick={async () => {
+                        if (!isConnected) {
+                          onConnectWallet?.()
+                        } else {
+                          checkout()
+                            .then(() => {
+                              setDisplayPendingTransaction(true)
+                            })
+                            .catch((e) => {
+                              console.error(e)
+                              setDisplayPendingTransaction(false)
+                            })
+                        }
                       }}
                     >
-                      {hasEnoughCurrency ? 'Purchase' : 'Add Funds to Purchase'}
+                      {hasEnoughCurrency || !isConnected
+                        ? 'Purchase'
+                        : 'Add Funds to Purchase'}
                     </Button>
                   )}
                 {!isCartEmpty && !hasValidItems && (

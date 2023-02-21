@@ -18,6 +18,7 @@ import { Cart } from '../../context/CartProvider'
 import InfoTooltip from '../../primitives/InfoTooltip'
 import { formatNumber } from '../../lib/numbers'
 import { mainnet } from 'wagmi'
+import * as allChains from 'wagmi/chains'
 
 type Props = {
   item: Cart['items'][0]
@@ -52,10 +53,11 @@ const CartItem: FC<Props> = ({ item, usdConversion, tokenUrl }) => {
   const { remove, data: cartCurrency } = useCart((cart) => cart.currency)
   const { data: cartChain } = useCart((cart) => cart.chain)
 
-  let price =
-    item.price?.currency?.contract !== cartCurrency?.contract
-      ? item.price?.amount?.native
-      : item.price?.amount?.decimal
+  const currencyConverted =
+    item.price && item.price?.currency?.contract !== cartCurrency?.contract
+  let price = currencyConverted
+    ? item.price?.amount?.native
+    : item.price?.amount?.decimal
   let previousPrice =
     item.previousPrice?.currency?.contract !== cartCurrency?.contract
       ? item.previousPrice?.amount?.native
@@ -69,17 +71,23 @@ const CartItem: FC<Props> = ({ item, usdConversion, tokenUrl }) => {
     priceDecrease = price < previousPrice
   }
   const usdPrice = (usdConversion || 0) * (price || 0)
+  const reservoirChain = client?.chains.find(
+    (chain) => cartChain?.id === chain.id
+  )
 
   return (
     <Flex
       onClick={() => {
+        const chain = Object.values(allChains).find(
+          (chain) => cartChain?.id === chain.id
+        )
         let url: string | undefined = tokenUrl
         if (!url && cartChain) {
           let tokenMetaKey: string | null = null
           if (cartChain.id === mainnet.id) {
             tokenMetaKey = 'reservoir:token-url-mainnet'
           } else {
-            tokenMetaKey = `reservoir:token-url-${cartChain.name.toLowerCase()}`
+            tokenMetaKey = `reservoir:token-url-${chain?.name.toLowerCase()}`
           }
           const tokenMetaTag = document.querySelector(
             `meta[property='${tokenMetaKey}']`
@@ -110,7 +118,7 @@ const CartItem: FC<Props> = ({ item, usdConversion, tokenUrl }) => {
     >
       <Flex css={{ position: 'relative', minWidth: 0, flexShrink: 0 }}>
         <CartItemImage
-          src={`${client?.apiBase}/redirect/tokens/${contract}:${token.id}/image/v1`}
+          src={`${reservoirChain?.baseApiUrl}/redirect/tokens/${contract}:${token.id}/image/v1`}
           css={!price ? { filter: 'grayscale(1)' } : {}}
         />
         <CloseButton
@@ -155,6 +163,13 @@ const CartItem: FC<Props> = ({ item, usdConversion, tokenUrl }) => {
             Item no longer available
           </Text>
         )}
+        {!priceIncrease && !priceDecrease && currencyConverted && (
+          <Flex css={{ gap: '$1', color: '$accentSolidHover' }} align="center">
+            <Text style="body2" color="accent">
+              Currency converted
+            </Text>
+          </Flex>
+        )}
         {priceIncrease && (
           <Flex css={{ gap: '$1', color: '$accentSolidHover' }} align="center">
             <FontAwesomeIcon width="11" icon={faArrowUp} />
@@ -189,15 +204,16 @@ const CartItem: FC<Props> = ({ item, usdConversion, tokenUrl }) => {
             address={cartCurrency?.contract}
             decimals={cartCurrency?.decimals}
             logoWidth={12}
+            chainId={cartChain?.id}
           />
-          {usdPrice && usdPrice > 0 && (
+          {usdPrice && usdPrice > 0 ? (
             <FormatCurrency
               amount={usdPrice}
               style="tiny"
               color="subtle"
               css={{ textAlign: 'end' }}
             />
-          )}
+          ) : null}
         </Flex>
       )}
     </Flex>
