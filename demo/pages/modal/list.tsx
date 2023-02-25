@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { ListModal } from '@nftearth/reservoir-kit-ui'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectKitButton } from 'connectkit'
 import ThemeSwitcher from 'components/ThemeSwitcher'
 import { useState } from 'react'
 import DeeplinkCheckbox from 'components/DeeplinkCheckbox'
@@ -47,6 +47,7 @@ const Index: NextPage = () => {
   const [nativeOnly, setNativeOnly] = useState(false)
   const [normalizeRoyalties, setNormalizeRoyalties] =
     useState(NORMALIZE_ROYALTIES)
+  const [enableOnChainRoyalties, setEnableOnChainRoyalties] = useState(false)
 
   return (
     <div
@@ -61,7 +62,7 @@ const Index: NextPage = () => {
         paddingTop: 150,
       }}
     >
-      <ConnectButton />
+      <ConnectKitButton />
 
       <div>
         <label>Collection Id: </label>
@@ -121,6 +122,16 @@ const Index: NextPage = () => {
           }}
         />
       </div>
+      <div>
+        <label>Enable On Chain Royalties: </label>
+        <input
+          type="checkbox"
+          checked={enableOnChainRoyalties}
+          onChange={(e) => {
+            setEnableOnChainRoyalties(e.target.checked)
+          }}
+        />
+      </div>
 
       <ListModal
         trigger={
@@ -145,6 +156,7 @@ const Index: NextPage = () => {
         tokenId={tokenId}
         currencies={currencies}
         normalizeRoyalties={normalizeRoyalties}
+        enableOnChainRoyalties={enableOnChainRoyalties}
         openState={hasDeeplink ? deeplinkOpenState : undefined}
         onGoToToken={() => console.log('Awesome!')}
         onListingComplete={(data) => {

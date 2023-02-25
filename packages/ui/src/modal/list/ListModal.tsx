@@ -53,6 +53,7 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   currencies?: Currency[]
   nativeOnly?: boolean
   normalizeRoyalties?: boolean
+  enableOnChainRoyalties?: boolean
   onGoToToken?: () => any
   onListingComplete?: (data: ListingCallbackData) => void
   onListingError?: (error: Error, data: ListingCallbackData) => void
@@ -98,6 +99,7 @@ export function ListModal({
   currencies,
   nativeOnly,
   normalizeRoyalties,
+  enableOnChainRoyalties = false,
   onGoToToken,
   onListingComplete,
   onListingError,
@@ -121,6 +123,7 @@ export function ListModal({
       collectionId={collectionId}
       currencies={currencies}
       normalizeRoyalties={normalizeRoyalties}
+      enableOnChainRoyalties={enableOnChainRoyalties}
     >
       {({
         token,
@@ -139,6 +142,7 @@ export function ListModal({
         currencies,
         currency,
         quantity,
+        royaltyBps,
         setListStep,
         listToken,
         setMarketPrice,
@@ -154,25 +158,23 @@ export function ListModal({
 
         useEffect(() => {
           if (stepData) {
-            const isNativeOrder =
-              stepData.listingData.marketplace.orderbook === 'nftearth'
-            const isSeaportOrder =
-              stepData.listingData.marketplace.orderKind === 'seaport'
-            const marketplaceName =
-              isNativeOrder && isSeaportOrder
-                ? `${stepData.listingData.marketplace.name} (on Seaport)`
-                : stepData.listingData.marketplace.name
-
+            const orderKind =
+              stepData.listingData[0].listing.orderKind || 'exchange'
+            const marketplaceNames = stepData.listingData
+              .map((listing) => listing.marketplace.name)
+              .join(', ')
             switch (stepData.currentStep.kind) {
               case 'transaction': {
                 setStepTitle(
-                  `Approve ${marketplaceName} to access item\nin your wallet`
+                  `Approve ${
+                    orderKind?.[0].toUpperCase() + orderKind?.slice(1)
+                  } to access item\nin your wallet`
                 )
                 break
               }
               case 'signature': {
                 setStepTitle(
-                  `Confirm listing on ${marketplaceName}\nin your wallet`
+                  `Confirm listing on ${marketplaceNames}\nin your wallet`
                 )
                 break
               }
@@ -267,7 +269,11 @@ export function ListModal({
           >
             {token && listStep == ListStep.SelectMarkets && (
               <ContentContainer>
-                <TokenStats token={token} collection={collection} />
+                <TokenStats
+                  token={token}
+                  collection={collection}
+                  royaltyBps={royaltyBps}
+                />
 
                 <MainContainer>
                   <Box css={{ p: '$4', flex: 1 }}>
@@ -432,7 +438,11 @@ export function ListModal({
             )}
             {token && listStep == ListStep.SetPrice && (
               <ContentContainer>
-                <TokenStats token={token} collection={collection} />
+                <TokenStats
+                  token={token}
+                  collection={collection}
+                  royaltyBps={royaltyBps}
+                />
 
                 <MainContainer>
                   <Box css={{ p: '$4', flex: 1 }}>
@@ -630,7 +640,9 @@ export function ListModal({
                       <TransactionProgress
                         justify="center"
                         fromImg={tokenImage}
-                        toImg={stepData?.listingData.marketplace.imageUrl || ''}
+                        toImgs={stepData?.listingData.map(
+                          (listing) => listing.marketplace.imageUrl || ''
+                        )}
                       />
                       <Text
                         css={{
