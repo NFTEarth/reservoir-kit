@@ -10,9 +10,14 @@ type Token = paths['/tokens/{token}/activity/v4']['get']['parameters']['path']["
 export default function (
   token: Token,
   options?: TokensQuery | false,
-  swrOptions: SWRInfiniteConfiguration = {}
+  swrOptions: SWRInfiniteConfiguration = {},
+  chainId?: number
 ) {
   const client = useReservoirClient()
+  const chain =
+    chainId !== undefined
+      ? client?.chains.find((chain) => chain.id === chainId)
+      : client?.currentChain()
 
   const response = useInfiniteApi<TokenDetailsResponse>(
     (pageIndex, previousPageData) => {
@@ -20,7 +25,7 @@ export default function (
         return null
       }
 
-      const url = new URL(`${client?.apiBase}/tokens/${token}/activity/v4`)
+      const url = new URL(`${chain?.baseApiUrl}/tokens/${token}/activity/v4`)
       let query: TokensQuery = { ...options }
 
       if (previousPageData && !previousPageData.continuation) {
@@ -30,7 +35,7 @@ export default function (
       }
 
       setParams(url, query)
-      return [url.href, client?.apiKey, client?.version]
+      return [url.href, chain?.apiKey, client?.version]
     },
     {
       revalidateOnMount: true,

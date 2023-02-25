@@ -548,8 +548,8 @@ function cartStore({
         .filter((item) => {
           const token = tokenMap[`${item.collection.id}:${item.token.id}`]
           return (
-            token.token?.owner?.toLowerCase() !== address?.toLowerCase() &&
-            token.market?.floorAsk?.maker?.toLowerCase() !==
+            token?.token?.owner?.toLowerCase() !== address?.toLowerCase() &&
+            token?.market?.floorAsk?.maker?.toLowerCase() !==
               address?.toLowerCase()
           )
         })

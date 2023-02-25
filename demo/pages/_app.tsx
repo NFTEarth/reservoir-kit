@@ -36,7 +36,7 @@ const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
 const ALCHEMY_KEY = process.env.NEXT_PUBLIC_ALCHEMY_KEY || ''
 
 const { chains, provider } = configureChains(
-  [allChains.mainnet, allChains.goerli, allChains.polygon],
+  [allChains.optimism, allChains.arbitrum],
   [alchemyProvider({ apiKey: ALCHEMY_KEY }), publicProvider()]
 )
 
@@ -82,21 +82,15 @@ const AppWrapper: FC<any> = ({ children }) => {
         options={{
           chains: [
             {
-              baseApiUrl: 'https://api.reservoir.tools',
-              id: allChains.mainnet.id,
+              baseApiUrl: 'https://indexer.nftearth.exchange',
+              id: allChains.optimism.id,
               default: CHAIN_ID === allChains.mainnet.id,
               apiKey: API_KEY,
             },
             {
-              baseApiUrl: 'https://api-goerli.reservoir.tools',
-              id: allChains.goerli.id,
-              default: CHAIN_ID === allChains.goerli.id,
-              apiKey: API_KEY,
-            },
-            {
-              baseApiUrl: 'https://api-polygon.reservoir.tools',
-              id: allChains.polygon.id,
-              default: CHAIN_ID === allChains.polygon.id,
+              baseApiUrl: 'https://arb-indexer.nftearth.exchange',
+              id: allChains.arbitrum.id,
+              default: CHAIN_ID === allChains.arbitrum.id,
               apiKey: API_KEY,
             },
           ],

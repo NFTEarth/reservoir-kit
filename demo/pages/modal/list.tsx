@@ -8,12 +8,12 @@ import { useRouter } from 'next/router'
 
 const DEFAULT_COLLECTION_ID =
   process.env.NEXT_PUBLIC_DEFAULT_COLLECTION_ID ||
-  '0xe14fa5fba1b55946f2fa78ea3bd20b952fa5f34e'
+  '0x99030c3f880a468ed74806fb2785afd2da54a2f4'
 const DEFAULT_TOKEN_ID = process.env.NEXT_PUBLIC_DEFAULT_TOKEN_ID || '39'
 const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
   ? process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES === 'true'
   : false
-const chainId: number = Number(process.env.NEXT_PUBLIC_CHAIN_ID || 1)
+const chainId: number = Number(process.env.NEXT_PUBLIC_CHAIN_ID || 10)
 
 let mainnetSymbol = 'ETH'
 

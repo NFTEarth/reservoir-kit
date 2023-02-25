@@ -33,7 +33,7 @@ export const ProviderOptionsContext =
   createContext<ReservoirKitProviderOptions>({})
 
 const defaultOptions = {
-  chains: [{ baseApiUrl: 'https://api.reservoir.tools', id: 1, default: true }],
+  chains: [{ baseApiUrl: 'https://indexer.nftearth.exchange', id: 10, default: true }],
 }
 
 const classNameObserverOptions = {
