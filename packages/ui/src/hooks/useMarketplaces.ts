@@ -1,4 +1,4 @@
-import { paths } from '@nftearth/reservoir-sdk'
+import { getNativeOrderbook, paths } from '@nftearth/reservoir-sdk'
 import getLocalMarketplaceData from '../lib/getLocalMarketplaceData'
 import { useEffect, useState } from 'react'
 import useReservoirClient from './useReservoirClient'
@@ -23,6 +23,7 @@ export default function (
     chainId !== undefined
       ? client?.chains.find((chain) => chain.id === chainId)
       : client?.currentChain()
+  const nativeOrderbook = getNativeOrderbook(chain?.id)
   const path = new URL(`${chain?.baseApiUrl}/admin/get-marketplaces`)
 
   const { data } = useSWRImmutable<
@@ -40,7 +41,7 @@ export default function (
         )
       }
       updatedMarketplaces.forEach((marketplace) => {
-        if (marketplace.orderbook === 'nftearth') {
+        if (marketplace.orderbook === nativeOrderbook) {
           const data = getLocalMarketplaceData()
           marketplace.name = data.title
           marketplace.feeBps = client?.marketplaceFee
@@ -65,8 +66,7 @@ export default function (
         }
         marketplace.price = 0
         marketplace.truePrice = 0
-        marketplace.isSelected =
-          marketplace.orderbook === 'nftearth' ? true : false
+        marketplace.isSelected = marketplace.orderbook === nativeOrderbook
       })
       setMarketplaces(updatedMarketplaces)
     }

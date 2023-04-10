@@ -135,9 +135,7 @@ export const BuyModalRenderer: FC<Props> = ({
     {
       revalidateFirstPage: true,
     },
-    open && (token?.market?.floorAsk?.id !== undefined || orderId)
-      ? true
-      : false
+    !!(open && (token?.market?.floorAsk?.id !== undefined || orderId))
   )
 
   const listing =

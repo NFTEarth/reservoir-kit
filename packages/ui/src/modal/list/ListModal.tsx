@@ -39,6 +39,7 @@ import InfoTooltip from '../../primitives/InfoTooltip'
 import { Marketplace } from '../../hooks/useMarketplaces'
 import { Currency } from '../../types/Currency'
 import { constants } from 'ethers'
+import { getNativeOrderbook } from '@nftearth/reservoir-sdk'
 
 type ListingCallbackData = {
   listings?: ListingData[]
@@ -115,6 +116,7 @@ export function ListModal({
   const [marketplacesToApprove, setMarketplacesToApprove] = useState<
     Marketplace[]
   >([])
+  const nativeOrderbook = getNativeOrderbook(reservoirChain?.id);
 
   return (
     <ListModalRenderer
@@ -232,7 +234,7 @@ export function ListModal({
         }, [transactionError])
 
         const availableMarketplaces = marketplaces.filter((market) => {
-          const isNative = market.orderbook === 'nftearth'
+          const isNative = market.orderbook === nativeOrderbook
           return nativeOnly
             ? market.listingEnabled && isNative
             : market.listingEnabled
@@ -243,7 +245,7 @@ export function ListModal({
         )
         const quantitySelectionAvailable = selectedMarketplaces.every(
           (marketplace) =>
-            marketplace.orderbook === 'nftearth' ||
+            marketplace.orderbook === nativeOrderbook ||
             marketplace.orderbook === 'opensea'
         )
 
@@ -396,7 +398,7 @@ export function ListModal({
                     )}
                     {availableMarketplaces
                       .filter(
-                        (marketplace) => marketplace.orderbook !== 'nftearth'
+                        (marketplace) => marketplace.orderbook !== nativeOrderbook
                       )
                       .map((marketplace) => (
                         <Box key={marketplace.name} css={{ mb: '$3' }}>
@@ -739,7 +741,7 @@ export function ListModal({
                     <Flex css={{ gap: '$3' }}>
                       {listingData.map((data) => {
                         const source =
-                          data.listing.orderbook === 'nftearth' &&
+                          data.listing.orderbook === nativeOrderbook &&
                           client?.source
                             ? client?.source
                             : data.marketplace.name

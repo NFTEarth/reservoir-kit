@@ -18,6 +18,8 @@ import { version } from '../../package.json'
  * @param request AxiosRequestConfig object with at least a url set
  * @param signer Ethereum signer object provided by the browser
  * @param setState Callback to update UI state has execution progresses
+ * @param newJson
+ * @param expectedPrice
  * @returns The data field of the last element in the steps array
  */
 
@@ -127,11 +129,9 @@ export async function executeSteps(
     if (!stepItem.data) {
       json = (await pollUntilHasData(request, (json) => {
         const data = json as Execute
-        return data?.steps?.[incompleteStepIndex].items?.[
+        return !!data?.steps?.[incompleteStepIndex].items?.[
           incompleteStepItemIndex
-        ].data
-          ? true
-          : false
+          ].data
       })) as Execute
       if (!json.steps || !json.steps[incompleteStepIndex].items) throw json
       const items = json.steps[incompleteStepIndex].items
@@ -207,7 +207,7 @@ export async function executeSteps(
                 if (res.status === 200) {
                   const data =
                     res.data as paths['/sales/v3']['get']['responses']['200']['schema']
-                  return data.sales && data.sales.length > 0 ? true : false
+                  return !!(data.sales && data.sales.length > 0)
                 }
                 return false
               }

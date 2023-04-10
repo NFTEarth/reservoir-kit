@@ -4,6 +4,7 @@ import { getClient } from '.'
 import { executeSteps } from '../utils/executeSteps'
 import axios, { AxiosRequestConfig } from 'axios'
 import { version } from '../../package.json'
+import { getNativeOrderbook } from '@nftearth/reservoir-sdk'
 
 type ListTokenBody = NonNullable<
   paths['/execute/list/v5']['post']['parameters']['body']['body']
@@ -31,6 +32,7 @@ export async function listToken(
   const client = getClient()
   const maker = await signer.getAddress()
   const baseApiUrl = client.currentChain()?.baseApiUrl
+  const nativeOrderbook = getNativeOrderbook(client.currentChain()?.id)
 
   if (!baseApiUrl) {
     throw new ReferenceError('ReservoirClient missing chain configuration')
@@ -44,7 +46,7 @@ export async function listToken(
 
     listings.forEach((listing) => {
       if (
-        (!listing.orderbook || listing.orderbook === 'nftearth') &&
+        (!listing.orderbook || listing.orderbook === nativeOrderbook) &&
         client.marketplaceFee &&
         client.marketplaceFeeRecipient &&
         !('fees' in listing)

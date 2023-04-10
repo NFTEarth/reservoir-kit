@@ -6,7 +6,7 @@ import { useCollections, useTokens } from '../hooks'
 type TokenLineItemProps = {
   tokenDetails: NonNullable<
     NonNullable<ReturnType<typeof useTokens>>['data']
-  >[0]
+  >[0] | undefined
   collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
   usdConversion?: number
   isSuspicious?: Boolean

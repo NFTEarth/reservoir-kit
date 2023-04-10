@@ -19,7 +19,7 @@ import {
 } from 'wagmi'
 
 import { constants } from 'ethers'
-import { Execute, ReservoirClientActions } from '@nftearth/reservoir-sdk'
+import { Execute, getNativeOrderbook, getNativeOrderkind, ReservoirClientActions } from '@nftearth/reservoir-sdk'
 import { ExpirationOption } from '../../types/ExpirationOption'
 import defaultExpirationOptions from '../../lib/defaultExpirationOptions'
 import { formatBN } from '../../lib/numbers'
@@ -195,6 +195,8 @@ export const BidModalRenderer: FC<Props> = ({
           chain?.network || 'mainnet'
         }&inputCurrency=eth&outputCurrency=${contractAddress}`
       : `https://app.uniswap.org/#/swap?theme=dark&exactAmount=${amountToWrap}`
+  const nativeOrderbook = getNativeOrderbook(chain?.id)
+  const nativeOrderkind = getNativeOrderkind(chain?.id)
 
   useEffect(() => {
     if (bidAmount !== '') {
@@ -276,8 +278,8 @@ export const BidModalRenderer: FC<Props> = ({
 
     const bid: BidData = {
       weiPrice: parseEther(`${bidAmount}`).toString(),
-      orderbook: 'nftearth',
-      orderKind: 'nftearth',
+      orderbook: nativeOrderbook,
+      orderKind: nativeOrderkind,
       attributeKey: trait?.key,
       attributeValue: trait?.value,
     }

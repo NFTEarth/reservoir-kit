@@ -1,6 +1,6 @@
 import { Execute, paths } from '../types'
 import { Signer } from 'ethers'
-import { executeSteps } from '../utils'
+import { executeSteps, getNativeOrderbook } from '../utils'
 import { getClient } from '.'
 
 type PlaceBidBody = NonNullable<
@@ -23,6 +23,7 @@ export async function placeBid({ bids, signer, onProgress }: Data) {
   const client = getClient()
   const maker = await signer.getAddress()
   const baseApiUrl = client.currentChain()?.baseApiUrl
+  const nativeOrderbook = getNativeOrderbook(client.currentChain()?.id)
 
   if (!baseApiUrl) {
     throw new ReferenceError('ReservoirClient missing configuration')
@@ -47,7 +48,7 @@ export async function placeBid({ bids, signer, onProgress }: Data) {
         }
       }
       if (
-        (!bid.orderbook || bid.orderbook === 'nftearth') &&
+        (!bid.orderbook || bid.orderbook === nativeOrderbook) &&
         client.marketplaceFee &&
         client.marketplaceFeeRecipient &&
         !('fees' in bid)

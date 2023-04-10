@@ -20,7 +20,7 @@ import {
 } from '../../hooks'
 import { useAccount, useSigner } from 'wagmi'
 
-import { Execute, ReservoirClientActions } from '@nftearth/reservoir-sdk'
+import { Execute, getNativeOrderbook, ReservoirClientActions } from '@nftearth/reservoir-sdk'
 import { formatUnits, parseUnits } from 'ethers/lib/utils.js'
 import dayjs from 'dayjs'
 import { Marketplace } from '../../hooks/useMarketplaces'
@@ -209,6 +209,7 @@ export const ListModalRenderer: FC<Props> = ({
   )
 
   const paymentTokens = openSeaToken?.collection?.payment_tokens
+  const nativeOrderbook = getNativeOrderbook(chainCurrency.chainId)
 
   const token = tokens && tokens.length > 0 ? tokens[0] : undefined
   const is1155 = token?.token?.kind === 'erc1155'
@@ -240,7 +241,7 @@ export const ListModalRenderer: FC<Props> = ({
     })
     const hasNonNativeMarketplace = updatedMarketplaces.find(
       (marketplace) =>
-        marketplace.isSelected && marketplace.orderbook !== 'nftearth'
+        marketplace.isSelected && marketplace.orderbook !== nativeOrderbook
     )
     if (hasNonNativeMarketplace) {
       setQuantity(1)
@@ -315,7 +316,7 @@ export const ListModalRenderer: FC<Props> = ({
     if (marketplaces) {
       setLocalMarketplace(
         marketplaces.find(
-          (marketplace) => marketplace.orderbook === 'nftearth'
+          (marketplace) => marketplace.orderbook === nativeOrderbook
         ) || null
       )
     } else {
@@ -332,7 +333,7 @@ export const ListModalRenderer: FC<Props> = ({
           marketplaces.map((marketplace) => {
             return {
               ...marketplace,
-              isSelected: marketplace.orderbook === 'nftearth',
+              isSelected: marketplace.orderbook === nativeOrderbook,
             }
           })
         )
@@ -410,7 +411,7 @@ export const ListModalRenderer: FC<Props> = ({
           if (
             client.marketplaceFee &&
             client.marketplaceFeeRecipient &&
-            listing.orderbook === 'nftearth'
+            listing.orderbook === nativeOrderbook
           ) {
             listing.fees.push(
               `${client.marketplaceFeeRecipient}:${client.marketplaceFee}`
