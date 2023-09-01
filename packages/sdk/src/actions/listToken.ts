@@ -4,7 +4,7 @@ import { getClient } from '.'
 import { executeSteps } from '../utils/executeSteps'
 import axios, { AxiosRequestConfig } from 'axios'
 import { version } from '../../package.json'
-import { getNativeOrderbook } from '@nftearth/reservoir-sdk'
+import { getNativeOrderbook } from '../utils'
 
 type ListTokenBody = NonNullable<
   paths['/execute/list/v5']['post']['parameters']['body']['body']

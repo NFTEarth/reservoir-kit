@@ -114,12 +114,10 @@ export async function buyToken(data: Data) {
     return true
   } catch (err: any) {
     if (tokens) {
-
       tokens.forEach((token) => {
         const data: paths['/tokens/refresh/v1']['post']['parameters']['body']['body'] =
           {
             token: `${token.contract}:${token.tokenId}`,
-            overrideCoolDown: true
           }
         request({
           method: 'POST',
